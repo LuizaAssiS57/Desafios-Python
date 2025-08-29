@@ -1,43 +1,47 @@
 import os
+from colorama import init, Fore, Style
+
+init(autoreset=True)
+
+NOTAS = [100, 50, 20, 10, 5, 2]
 
 while True:
 
     os.system('cls' if os.name == 'nt' else 'clear')
 
     print("======== BEM VINDO AO NOSSO CAIXA ELETRÔNICO ========")
-    vlr_saque = int(input("Qual o valor que deseja sacar? Ou digite 0 para sair da operação. "))
 
-    if vlr_saque == 0:
-        break
+    try:
+        vlr_saque = int(input("Qual o valor que deseja sacar? Ou digite 0 para sair da operação. "))
 
-    vlr_original = vlr_saque
+        if vlr_saque == 0:
+            break
 
-    qtd_100 = vlr_saque // 100
-    vlr_saque = vlr_saque % 100
+        if vlr_saque < 0:
+            print("Valor inválido")
+            input("Aperte Enter para continuar.")
+            continue
 
-    qtd_50 = vlr_saque // 50
-    vlr_saque = vlr_saque % 50
-    
-    qtd_20 = vlr_saque // 20
-    vlr_saque = vlr_saque % 20
+        vlr_original = vlr_saque
+        resultado = {}
 
-    qtd_10 = vlr_saque // 10
-    vlr_saque = vlr_saque % 10
+        for nota in NOTAS:
+            if vlr_saque >= nota:
+                qtd = vlr_saque // nota
+                resultado[nota] = qtd
+                vlr_saque %= nota
 
-    qtd_5 = vlr_saque // 5
-    vlr_saque = vlr_saque % 5
+        print("======== FINALIZANDO CONTAGEM DE NOTAS ========")
+        print(f"\nO valor solicitado foi R${vlr_original}, você receberá:")
 
-    qtd_2 = vlr_saque // 2
-    vlr_saque = vlr_saque % 2
+        for nota, quantidade in resultado.items():
+            print(f"{quantidade} nota(s) de R${nota}")
 
-    print("======== FINALIZANDO CONTAGEM DE NOTAS ========")
-    print(f"\nO valor solicitado foi R${vlr_original}, você receberá:")
-    print(f"{qtd_100} notas de R$100 ")
-    print(f"{qtd_50} notas de R$50 ")
-    print(f"{qtd_20} notas de R$20 ")
-    print(f"{qtd_10} notas de R$10 ")
-    print(f"{qtd_5} notas de R$5 ")
-    print(f"{qtd_2} notas de R$2 ")
+        if vlr_saque > 0:
+            print(f"Restante: {vlr_saque} (Não será possivel sacar com as notas disponiveis.)")
+
+    except ValueError:
+        print("Por favor digite um valor numerico válido!")
 
     input("Precione Enter para voltar a tela inicial.")
 

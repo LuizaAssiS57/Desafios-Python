@@ -1,7 +1,8 @@
 import os
-os.system('cls')
 
 while True:
+
+    os.system('cls' if os.name == 'nt' else 'clear')
 
     print("===== VERIFICANDO TRIÂNGULOS =====")
     lado_a = float(input("Informe o lado A do triângulo: "))
@@ -18,7 +19,7 @@ while True:
     else:
         print("Não foi possivel formar um triângulo!")
 
-    voltar = input("Gostaria de verificar outro triâgulo? (s/n) ")
+    voltar = input("Gostaria de verificar outro triâgulo? (s/n) ").strip().lower()
 
     if voltar == "n":
         break
